@@ -1,11 +1,8 @@
 ﻿using MediatR;
 using Newtonsoft.Json;
-using Polly;
-using Polly.Retry;
 using SGM.SAC.Domain.Dto;
 using SGM.SAC.Domain.HttpResponse;
 using SGM.SAC.Domain.QuerySide.Queries;
-using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,8 +10,7 @@ using System.Threading.Tasks;
 namespace SGM.SAC.Domain.QuerySide.QueryHandlers
 {
     public class PropertyTaxQueryHandler : IRequestHandler<PropertyTaxQuery, PropertyTaxResult>
-    {
-        private readonly AsyncRetryPolicy _retryPolicy;
+    {        
         private readonly HttpClient _httpClient;
         private readonly string _remoteServiceBaseUrl;
 

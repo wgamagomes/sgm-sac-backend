@@ -3,12 +3,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Polly;
+using Polly.Extensions.Http;
 using SGM.SAC.Domain.Dto;
 using SGM.SAC.Domain.QuerySide.Queries;
 using SGM.SAC.Domain.QuerySide.QueryHandlers;
 using SGM.SAC.Domain.Settings;
 using System;
+using System.Net.Http;
 using System.Text;
+
 
 namespace SGM.SAC.Infra.Crosscutting.Bootstrappings
 {
@@ -49,7 +53,15 @@ namespace SGM.SAC.Infra.Crosscutting.Bootstrappings
             services.AddHttpClient<IRequestHandler<PropertyTaxQuery, PropertyTaxResult>, PropertyTaxQueryHandler>(client =>
             {
                 client.BaseAddress = new Uri(config.GetSection("BaseAddress").Value);
-            });
+            }).AddPolicyHandler(GetRetryPolicy());
+        }
+
+        static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
     }
 }
