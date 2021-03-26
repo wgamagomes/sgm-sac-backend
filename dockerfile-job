@@ -1,0 +1,26 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src
+
+COPY ["containers/job-gep/src/SGM.GEP.Job.csproj", "containers/job-gep/src/"]
+COPY ["dotnet-packages/gep/src/SGM.GEP.Domain/SGM.GEP.Domain.csproj", "dotnet-packages/gep/src/SGM.GEP.Domain/"]
+COPY ["dotnet-packages/gep/src/SGM.GEP.Infra.Crosscutting/SGM.GEP.Infra.Crosscutting.csproj", "dotnet-packages/gep/src/SGM.GEP.Infra.Crosscutting/"]
+COPY ["dotnet-packages/gep/src/SGM.GEP.Infra.Data/SGM.GEP.Infra.Data.csproj", "dotnet-packages/gep/src/SGM.GEP.Infra.Data/"]
+COPY ["dotnet-packages/gep/src/SGM.GEP.Infra.FTP/SGM.GEP.Infra.Ftp.csproj", "dotnet-packages/gep/src/SGM.GEP.Infra.FTP/"]
+
+RUN dotnet restore "containers/job-gep/src/SGM.GEP.Job.csproj"
+COPY . .
+WORKDIR "/src/containers/job-gep/src"
+RUN dotnet build "SGM.GEP.Job.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "SGM.GEP.Job.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "SGM.GEP.Job.dll"]

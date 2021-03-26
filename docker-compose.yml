@@ -1,0 +1,69 @@
+version: '3'
+
+networks: 
+    mongo-compose-network:
+        driver: bridge
+        
+services:
+    mongo-express:
+        image: mongo-express
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_BASICAUTH_USERNAME: admin
+            ME_CONFIG_BASICAUTH_PASSWORD: mongoexp!234Qwer
+            ME_CONFIG_MONGODB_PORT: 27017
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: mongodb!234Qwer
+        links:
+            - mongo
+        networks:
+            - mongo-compose-network
+
+    mongo:
+        image: mongo
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: mongodb!234Qwer
+        ports:
+            - "2717:27017"
+        volumes:
+            - /home/Desenvolvimento/Docker/Volumes/MongoDB:/data/db
+        networks:
+            - mongo-compose-network
+
+        
+    sgm-gep-api:
+        image: sgm-gep-api:latest
+        container_name: sgm-gep-api   
+        ports:
+            - "5002:80"        
+        build:
+            context: .
+            dockerfile: ./dockerfile-api
+        networks:
+            - mongo-compose-network   
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+        depends_on:           
+            - mongo  
+
+    sgm-gep-job:
+        image: sgm-gep-job:latest
+        container_name: sgm-gep-job
+        build:
+            context: .
+            dockerfile: ./dockerfile-job
+        networks:
+            - mongo-compose-network   
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+        depends_on:           
+            - mongo 
+
+
+
+
+
+
+            
