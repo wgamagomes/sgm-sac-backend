@@ -26,7 +26,7 @@ namespace SGM.SAC.Domain.QuerySide.QueryHandlers
 
         public async Task<PropertyTaxResult> Handle(PropertyTaxQuery request, CancellationToken cancellationToken)
         {
-            var responseString = string.Empty;
+            string responseString;
 
             if (!request.IsRuralTax)
                 responseString = await _httpClient.GetStringAsync($"{_remoteServiceBaseUrl}/iptu/{request.PropertyRegistration}");
