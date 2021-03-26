@@ -7,6 +7,7 @@ using SGM.SAC.Domain.Dto;
 using SGM.SAC.Domain.QuerySide.Queries;
 using SGM.SAC.Domain.QuerySide.QueryHandlers;
 using SGM.SAC.Domain.Settings;
+using System;
 using System.Text;
 
 namespace SGM.SAC.Infra.Crosscutting.Bootstrappings
@@ -21,7 +22,7 @@ namespace SGM.SAC.Infra.Crosscutting.Bootstrappings
             services.AddMediatR(typeof(ServicesBootStrap).Assembly);
 
             // Settings
-            var authSettingsSection = config.GetSection("authSettings");
+            var authSettingsSection = config.GetSection("AuthSettings");
             services.Configure<AuthSettings>(authSettingsSection);
             var authSettings = authSettingsSection.Get<AuthSettings>();
             var key = Encoding.ASCII.GetBytes(authSettings.Secret);
@@ -45,7 +46,10 @@ namespace SGM.SAC.Infra.Crosscutting.Bootstrappings
             });
 
             // Query Handlers
-            services.AddScoped<IRequestHandler<PropertyTaxQuery, PropertyTaxResult>, PropertyTaxQueryHandler>();
+            services.AddHttpClient<IRequestHandler<PropertyTaxQuery, PropertyTaxResult>, PropertyTaxQueryHandler>(client =>
+            {
+                client.BaseAddress = new Uri(config.GetSection("BaseAddress").Value);
+            });
         }
     }
 }

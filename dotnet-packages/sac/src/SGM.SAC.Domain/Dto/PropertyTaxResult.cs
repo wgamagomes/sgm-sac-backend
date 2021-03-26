@@ -6,12 +6,15 @@ namespace SGM.SAC.Domain.Dto
     {
         public PropertyTaxDto PropertyTax { get; private set; }
 
-        public static PropertyTaxResult Create(PropertyTaxHttpResponse propertyTaxHttpResponse) => new PropertyTaxResult
+        public static PropertyTaxResult Create(PropertyTaxHttpResponse httpResponse) => new PropertyTaxResult
         {
             PropertyTax = new PropertyTaxDto
             {
-                PropertyRegistration = propertyTaxHttpResponse.PropertyRegistration,
-                Content = propertyTaxHttpResponse.Content
+                PropertyRegistration = httpResponse.PropertyRegistration,
+                Content = httpResponse.Content,
+                Id = httpResponse.Id,
+                Succeeded = httpResponse.Succeeded,
+                IsRuralTax = httpResponse.IsRuralTax,
             }
         };
     }

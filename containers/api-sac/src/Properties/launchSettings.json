@@ -12,13 +12,13 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "project",
+      "launchUrl": "citizen-service",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "SGM.Core": {
-      "commandName": "Project",
+      "commandName": "citizen-service",
       "launchBrowser": true,
       "launchUrl": "project",
       "environmentVariables": {
