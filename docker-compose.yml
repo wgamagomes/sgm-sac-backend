@@ -37,7 +37,7 @@ services:
         image: sgm-sac-api:latest
         container_name: sgm-sac-api   
         ports:
-            - "5002:80"        
+            - "5005:80"        
         build:
             context: .
             dockerfile: ./dockerfile-api

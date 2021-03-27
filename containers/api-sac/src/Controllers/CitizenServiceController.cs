@@ -5,14 +5,13 @@ using Polly.CircuitBreaker;
 using SGM.SAC.Api.Constants;
 using SGM.SAC.Api.Filters;
 using SGM.SAC.Api.Models;
-using SGM.SAC.Domain.Extensions;
 using SGM.SAC.Domain.QuerySide.Queries;
 using System.Threading.Tasks;
 
 namespace SGM.SAC.Api.Controllers
 {
     [ApiController]
-    //[CustomAuthorize("admin", "citizen")]
+    [CustomAuthorize("admin", "citizen")]
     [Route("[controller]")]
     public class CitizenServiceController : ControllerBase
     {
