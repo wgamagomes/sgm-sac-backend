@@ -21,7 +21,7 @@ namespace SGM.SAC.Domain.QuerySide.QueryHandlers
         }
 
         public async Task<PropertyTaxResult> Handle(PropertyTaxQuery request, CancellationToken cancellationToken)
-        {
+        {  
             string responseString;
 
             if (!request.IsRuralTax)
@@ -33,7 +33,6 @@ namespace SGM.SAC.Domain.QuerySide.QueryHandlers
             result.PropertyRegistration = request.PropertyRegistration;
 
             return PropertyTaxResult.Create(result);
-
         }
     }
 }

@@ -53,7 +53,8 @@ namespace SGM.SAC.Infra.Crosscutting.Bootstrappings
             services.AddHttpClient<IRequestHandler<PropertyTaxQuery, PropertyTaxResult>, PropertyTaxQueryHandler>(client =>
             {
                 client.BaseAddress = new Uri(config.GetSection("BaseAddress").Value);
-            }).AddPolicyHandler(GetRetryPolicy());
+            }).AddPolicyHandler(GetRetryPolicy())
+              .AddPolicyHandler(GetCircuitBreakerPolicy());
         }
 
         static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
@@ -62,6 +63,13 @@ namespace SGM.SAC.Infra.Crosscutting.Bootstrappings
                 .HandleTransientHttpError()
                 .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
                 .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+        }
+
+        static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .CircuitBreakerAsync(3, TimeSpan.FromSeconds(30));
         }
     }
 }

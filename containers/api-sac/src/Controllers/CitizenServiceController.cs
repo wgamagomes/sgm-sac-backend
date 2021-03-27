@@ -1,7 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Polly.CircuitBreaker;
+using SGM.SAC.Api.Constants;
 using SGM.SAC.Api.Filters;
+using SGM.SAC.Api.Models;
+using SGM.SAC.Domain.Extensions;
 using SGM.SAC.Domain.QuerySide.Queries;
 using System.Threading.Tasks;
 
@@ -21,19 +25,23 @@ namespace SGM.SAC.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        [Route("getPropertyTax")]
-        public async Task<ActionResult> GetPropertyTax(string propertyRegistration, bool isRuralTax)
+        [HttpPost]
+        [Route(Routes.PropertyTaxRoute)]
+        public async Task<ActionResult> GetPropertyTax([FromBody] PropertyTaxRequest request)
         {
-            if (string.IsNullOrEmpty(propertyRegistration))
-                return BadRequest("Invalid Property Registration.");
+            try
+            {
+                var result = await _mediator.Send(PropertyTaxQuery.Create(request.PropertyRegistration, (bool)request.IsRuralTax));
 
-            var result = await _mediator.Send(PropertyTaxQuery.Create(propertyRegistration, isRuralTax));
+                if (result == null)
+                    return NotFound("Property tax was not found.");
 
-            if (result == null)
-                return NotFound("Gantt Project was not found.");
-
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (BrokenCircuitException)
+            {
+                return Problem("Service is inoperative, please try later on.", statusCode: 500);
+            }
         }
     }
 }
