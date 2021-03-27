@@ -1,4 +1,4 @@
-﻿using SGM.GEP.Domain.Entities;
+﻿using SGM.SAC.Domain.Entities;
 
 namespace SGM.GEP.Infra.Data.Mongo.Log
 {

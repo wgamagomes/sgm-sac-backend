@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SGM.GEP.Domain\SGM.GEP.Domain.csproj" />
+    <ProjectReference Include="..\SGM.SAC.Domain\SGM.SAC.Domain.csproj" />
   </ItemGroup>
 
 </Project>

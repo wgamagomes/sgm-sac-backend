@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
-using SGM.GEP.Domain.Entities;
-using SGM.GEP.Domain.Interfaces.Repositories;
+using SGM.SAC.Domain.Entities;
+using SGM.SAC.Domain.Interfaces.Repositories;
 using SGM.GEP.Infra.Data.Mongo.Contexts;
 using System;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SGM.GEP.Infra.Data.Mongo.Repositories
+namespace SGM.SAC.Infra.Data.Mongo.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : Entity
     {

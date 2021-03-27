@@ -1,5 +1,5 @@
-﻿using SGM.GEP.Domain.Infra.Logger;
-using SGM.GEP.Infra.Data.Mongo.Contexts;
+﻿using SGM.GEP.Infra.Data.Mongo.Contexts;
+using SGM.SAC.Domain.Infra.Logger;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

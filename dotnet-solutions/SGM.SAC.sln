@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGM.SAC.Infra.Crosscutting"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGM.SAC.Test", "..\dotnet-packages\sac\test\SGM.SAC.Test\SGM.SAC.Test.csproj", "{FF4B8224-2834-4E43-B42E-5A27683C66AE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGM.SAC.Infra.Data", "..\dotnet-packages\sac\src\SGM.SAC.Infra.Data\SGM.SAC.Infra.Data.csproj", "{1100117F-DCD3-47C4-9528-74B336A80589}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{FF4B8224-2834-4E43-B42E-5A27683C66AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF4B8224-2834-4E43-B42E-5A27683C66AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF4B8224-2834-4E43-B42E-5A27683C66AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1100117F-DCD3-47C4-9528-74B336A80589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1100117F-DCD3-47C4-9528-74B336A80589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1100117F-DCD3-47C4-9528-74B336A80589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1100117F-DCD3-47C4-9528-74B336A80589}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{DD1765A7-792C-426B-91E1-6081EFF0FDA1} = {6B116038-6F89-417F-BF5F-468F3DD01C04}
 		{4767D342-CE08-43D0-9625-71DF2C8E2B7B} = {7B04D70E-2354-4EA3-975C-263C60026756}
 		{FF4B8224-2834-4E43-B42E-5A27683C66AE} = {F1B48130-4BD2-44C6-9417-8C8E313E6C54}
+		{1100117F-DCD3-47C4-9528-74B336A80589} = {7B04D70E-2354-4EA3-975C-263C60026756}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3498848F-1044-47F0-B97B-6268A6A433F6}

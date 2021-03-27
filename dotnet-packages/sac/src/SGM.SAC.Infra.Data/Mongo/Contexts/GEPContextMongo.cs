@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver;
-using SGM.GEP.Domain.Entities;
 
 namespace SGM.GEP.Infra.Data.Mongo.Contexts
 {
@@ -11,7 +10,7 @@ namespace SGM.GEP.Infra.Data.Mongo.Contexts
 
         }
 
-        public IMongoCollection<Project> Projects => GetCollection<Project>(Database);
+        //public IMongoCollection<WhateverEntity> Projects => GetCollection<WhateverEntity>(Database);
     }
 
 }

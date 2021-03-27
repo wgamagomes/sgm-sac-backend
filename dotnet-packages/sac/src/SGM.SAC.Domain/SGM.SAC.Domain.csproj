@@ -14,7 +14,6 @@
   <ItemGroup>
     <Folder Include="CommandSide\CommandHandlers\" />
     <Folder Include="CommandSide\Commands\" />
-    <Folder Include="Interfaces\Services\" />
   </ItemGroup>
 
 </Project>

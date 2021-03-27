@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace SGM.Core.Infra.Data.Contexts.EF
+namespace SGM.SAC.Infra.Data.Contexts.EF
 {
-    public class GEPContextEF : DbContext
+    public class SACContextEF : DbContext
     {
-        public GEPContextEF(DbContextOptions options)
+        public SACContextEF(DbContextOptions options)
             :base(options)
         {
 
