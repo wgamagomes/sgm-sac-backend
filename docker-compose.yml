@@ -33,9 +33,9 @@ services:
             - mongo-compose-network
 
         
-    sgm-gep-api:
-        image: sgm-gep-api:latest
-        container_name: sgm-gep-api   
+    sgm-sac-api:
+        image: sgm-sac-api:latest
+        container_name: sgm-sac-api   
         ports:
             - "5002:80"        
         build:
@@ -48,18 +48,6 @@ services:
         depends_on:           
             - mongo  
 
-    sgm-gep-job:
-        image: sgm-gep-job:latest
-        container_name: sgm-gep-job
-        build:
-            context: .
-            dockerfile: ./dockerfile-job
-        networks:
-            - mongo-compose-network   
-        environment:
-            - ASPNETCORE_ENVIRONMENT=Development
-        depends_on:           
-            - mongo 
 
 
 

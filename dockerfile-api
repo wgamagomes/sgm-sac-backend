@@ -6,21 +6,21 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 
-COPY ["containers/api-gep/src/SGM.GEP.Api.csproj", "containers/api-gep/src/"]
-COPY ["dotnet-packages/gep/src/SGM.GEP.Domain/SGM.GEP.Domain.csproj", "dotnet-packages/gep/src/SGM.GEP.Domain/"]
-COPY ["dotnet-packages/gep/src/SGM.GEP.Infra.Crosscutting/SGM.GEP.Infra.Crosscutting.csproj", "dotnet-packages/gep/src/SGM.GEP.Infra.Crosscutting/"]
-COPY ["dotnet-packages/gep/src/SGM.GEP.Infra.Data/SGM.GEP.Infra.Data.csproj", "dotnet-packages/gep/src/SGM.GEP.Infra.Data/"]
-COPY ["dotnet-packages/gep/src/SGM.GEP.Infra.FTP/SGM.GEP.Infra.Ftp.csproj", "dotnet-packages/gep/src/SGM.GEP.Infra.FTP/"]
+COPY ["containers/api-sac/src/SGM.SAC.Api.csproj", "containers/api-sac/src/"]
+COPY ["dotnet-packages/sac/src/SGM.SAC.Domain/SGM.SAC.Domain.csproj", "dotnet-packages/sac/src/SGM.SAC.Domain/"]
+COPY ["dotnet-packages/sac/src/SGM.SAC.Infra.Crosscutting/SGM.SAC.Infra.Crosscutting.csproj", "dotnet-packages/sac/src/SGM.SAC.Infra.Crosscutting/"]
+COPY ["dotnet-packages/sac/src/SGM.SAC.Infra.Data/SGM.SAC.Infra.Data.csproj", "dotnet-packages/sac/src/SGM.SAC.Infra.Data/"]
 
-RUN dotnet restore "containers/api-gep/src/SGM.GEP.Api.csproj"
+
+RUN dotnet restore "containers/api-sac/src/SGM.SAC.Api.csproj"
 COPY . .
-WORKDIR "/src/containers/api-gep/src"
-RUN dotnet build "SGM.GEP.Api.csproj" -c Release -o /app/build
+WORKDIR "/src/containers/api-sac/src"
+RUN dotnet build "SGM.SAC.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "SGM.GEP.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "SGM.SAC.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SGM.GEP.Api.dll"]
+ENTRYPOINT ["dotnet", "SGM.SAC.Api.dll"]
